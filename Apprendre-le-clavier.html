@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apprendre le clavier — 16 leçons + défis</title>
+<style>
+  :root{
+    --bleu:#1d6fb8;
+    --bleu-clair:#eaf3fb;
+    --vert:#2e9e5b;
+    --vert-clair:#e4f7ec;
+    --rouge:#e0483b;
+    --rouge-clair:#fdeceb;
+    --jaune:#f6d65a;
+    --jaune-bord:#caa400;
+    --violet:#7d4fa3;
+    --gris:#5a6b7a;
+    --gris-clair:#eef2f6;
+    --fond:#f5f8fc;
+    --ombre:0 2px 8px rgba(0,0,0,.08);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Segoe UI", Calibri, Arial, sans-serif;
+    background:var(--fond);
+    color:#23303b;
+    min-height:100vh;
+  }
+  header{
+    text-align:center;
+    padding:18px 10px 6px;
+  }
+  header h1{
+    margin:0;
+    color:var(--bleu);
+    font-size:26px;
+  }
+  header p{
+    margin:4px 0 0;
+    color:var(--gris);
+    font-size:15px;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:10px 16px 40px;}
+
+  /* ---------- MENU ---------- */
+  .dashboard{
+    background:#fff;border:1.5px solid #e1e8f0;border-radius:14px;
+    padding:16px 20px;box-shadow:var(--ombre);margin-top:14px;
+  }
+  .dash-top{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .dash-top h2{margin:0;font-size:18px;color:var(--bleu);}
+  .btn-reset{
+    background:#fff;border:1.5px solid #e6c5c2;color:var(--rouge);
+    border-radius:9px;padding:6px 13px;font-size:13px;font-weight:bold;
+    cursor:pointer;font-family:inherit;
+  }
+  .btn-reset:hover{background:var(--rouge-clair);}
+  .dash-bar{height:14px;background:#e3eaf1;border-radius:9px;overflow:hidden;margin:13px 0 11px;}
+  .dash-bar > div{height:100%;background:linear-gradient(90deg,var(--vert),#5bbf86);transition:width .4s;}
+  .dash-stats{display:flex;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--gris);}
+  .dash-stats b{color:var(--bleu);font-size:17px;}
+  .rec{margin-top:6px;font-size:12px;color:var(--gris);}
+  .rec.none{color:#b8c2cc;font-style:italic;}
+
+  .lessons{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+    gap:14px;
+    margin-top:14px;
+  }
+  .card{
+    background:#fff;
+    border:1.5px solid #e1e8f0;
+    border-radius:14px;
+    padding:14px 16px;
+    cursor:pointer;
+    box-shadow:var(--ombre);
+    transition:transform .12s, box-shadow .12s, border-color .12s;
+    position:relative;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(29,111,184,.18);border-color:#bcd6ee;}
+  .card .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:34px;height:34px;border-radius:50%;
+    background:var(--bleu-clair);color:var(--bleu);font-weight:bold;font-size:16px;
+  }
+  .card .niv{
+    float:right;font-size:11px;font-weight:bold;text-transform:uppercase;
+    padding:3px 9px;border-radius:20px;letter-spacing:.5px;
+  }
+  .niv.deb{background:var(--vert-clair);color:var(--vert);}
+  .niv.int{background:#fff3df;color:var(--orange,#d98200);}
+  .niv.av{background:#f3edf9;color:var(--violet);}
+  .niv.defi{background:var(--rouge-clair);color:var(--rouge);}
+  .card h3{margin:12px 0 4px;font-size:17px;}
+  .card .desc{font-size:13px;color:var(--gris);min-height:34px;}
+  .card .stars{margin-top:8px;font-size:18px;letter-spacing:2px;color:#dcdcdc;}
+  .card .stars b{color:#f5b50a;}
+
+  /* ---------- ÉCRAN LEÇON ---------- */
+  .hidden{display:none !important;}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:10px;}
+  .btn{
+    border:none;border-radius:10px;padding:9px 16px;font-size:14px;font-weight:bold;
+    cursor:pointer;font-family:inherit;
+  }
+  .btn-ghost{background:#fff;border:1.5px solid #d4dde6;color:var(--gris);}
+  .btn-ghost:hover{background:var(--gris-clair);}
+  .btn-blue{background:var(--bleu);color:#fff;}
+  .btn-blue:hover{background:#175a96;}
+  .lesson-title{font-size:18px;font-weight:bold;flex:1;}
+  .lesson-title small{display:block;font-size:13px;font-weight:normal;color:var(--gris);}
+
+  .stats{display:flex;gap:10px;}
+  .stat{
+    background:#fff;border:1.5px solid #e1e8f0;border-radius:10px;
+    padding:6px 14px;text-align:center;min-width:78px;
+  }
+  .stat .v{font-size:19px;font-weight:bold;color:var(--bleu);}
+  .stat .l{font-size:11px;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;}
+
+  .progress-line{height:8px;background:#e3eaf1;border-radius:8px;overflow:hidden;margin:14px 0;}
+  .progress-line > div{height:100%;width:0;background:var(--vert);transition:width .25s;}
+
+  /* zone de texte à taper */
+  .typebox{
+    background:#fff;border:1.5px solid #e1e8f0;border-radius:16px;
+    padding:26px 28px;box-shadow:var(--ombre);
+    font-size:30px;line-height:1.9;letter-spacing:1px;
+    font-family:"Consolas","Courier New",monospace;
+    min-height:96px;
+    user-select:none;
+  }
+  .char{padding:1px 0;border-radius:4px;transition:background .08s,color .08s;}
+  .char.pending{color:#9fb0bf;}
+  .char.done{color:var(--vert);}
+  .char.current{background:var(--jaune);color:#3a2f00;box-shadow:0 0 0 2px var(--jaune-bord) inset;}
+  .char.wrong{background:var(--rouge-clair);color:var(--rouge);box-shadow:0 0 0 2px var(--rouge) inset;}
+  .char.space{display:inline-block;min-width:.55em;border-bottom:3px solid transparent;}
+  .char.space.current{background:transparent;border-bottom-color:var(--jaune-bord);box-shadow:none;}
+  .char.space.wrong{background:transparent;border-bottom-color:var(--rouge);box-shadow:none;}
+  .char.space.done{border-bottom-color:transparent;}
+
+  .hint{
+    text-align:center;margin:14px 0 6px;font-size:15px;color:var(--gris);min-height:22px;
+  }
+  .hint b{color:var(--bleu);}
+
+  /* ---------- CLAVIER ---------- */
+  .keyboard{
+    background:#fff;border:1.5px solid #e1e8f0;border-radius:16px;
+    padding:14px 12px;box-shadow:var(--ombre);max-width:860px;margin:6px auto 0;
+  }
+  .krow{display:flex;justify-content:center;gap:6px;margin-bottom:6px;}
+  .key{
+    background:var(--gris-clair);border:1.5px solid #d7dee6;
+    border-bottom-width:3px;border-radius:9px;
+    min-width:42px;height:46px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;color:#3b4a57;font-weight:600;
+    transition:background .08s,color .08s,transform .05s;
+  }
+  .key.wide{min-width:66px;font-size:12px;}
+  .key.tab{min-width:60px;}
+  .key.maj{min-width:78px;font-size:12px;}
+  .key.entree{min-width:80px;font-size:12px;}
+  .key.space{min-width:300px;}
+  .key small{font-size:10px;color:#8595a3;}
+  .key.kb-next{background:var(--jaune);border-color:var(--jaune-bord);color:#3a2f00;box-shadow:0 0 0 2px var(--jaune-bord);}
+  .key.kb-good{background:var(--vert);border-color:#1c7a42;color:#fff;transform:translateY(2px);}
+  .key.kb-bad{background:var(--rouge);border-color:#b32b20;color:#fff;transform:translateY(2px);}
+
+  /* ---------- RÉSULTATS ---------- */
+  .result{
+    background:#fff;border-radius:18px;box-shadow:var(--ombre);
+    padding:34px;text-align:center;max-width:540px;margin:24px auto;
+  }
+  .result h2{margin:0 0 6px;color:var(--bleu);font-size:24px;}
+  .result .bigstars{font-size:52px;letter-spacing:6px;color:#dcdcdc;margin:10px 0;}
+  .result .bigstars b{color:#f5b50a;}
+  .result .rstats{display:flex;justify-content:center;gap:18px;margin:18px 0 24px;flex-wrap:wrap;}
+  .result .rstat .v{font-size:28px;font-weight:bold;color:var(--bleu);}
+  .result .rstat .l{font-size:12px;color:var(--gris);text-transform:uppercase;}
+  .result .msg{font-size:16px;color:var(--gris);margin-bottom:18px;}
+  .result .actions{display:flex;gap:12px;justify-content:center;}
+
+  footer{text-align:center;color:#aab6c1;font-size:12px;padding:0 0 24px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⌨️ J'apprends le clavier</h1>
+  <p>16 leçons + 3 défis vitesse — du débutant au confirmé</p>
+</header>
+
+<div class="wrap">
+
+  <!-- ====== MENU ====== -->
+  <section id="menu">
+    <div class="dashboard" id="dashboard"></div>
+    <div class="lessons" id="lessonGrid"></div>
+  </section>
+
+  <!-- ====== LEÇON ====== -->
+  <section id="lesson" class="hidden">
+    <div class="topbar">
+      <button class="btn btn-ghost" onclick="backToMenu()">← Retour</button>
+      <div class="lesson-title" id="lTitle"></div>
+      <div class="stats">
+        <div class="stat"><div class="v" id="sAcc">100%</div><div class="l">Précision</div></div>
+        <div class="stat"><div class="v" id="sSpeed">0</div><div class="l">Mots/min</div></div>
+        <div class="stat"><div class="v" id="sTime">0:00</div><div class="l">Temps</div></div>
+        <div class="stat"><div class="v" id="sErr">0</div><div class="l">Erreurs</div></div>
+      </div>
+    </div>
+
+    <div class="progress-line"><div id="lProgress"></div></div>
+
+    <div class="typebox" id="typebox"></div>
+
+    <div class="hint" id="hint"></div>
+
+    <div class="keyboard" id="keyboard"></div>
+  </section>
+
+  <!-- ====== RÉSULTATS ====== -->
+  <section id="results" class="hidden">
+    <div class="result">
+      <h2 id="rTitle">Leçon terminée !</h2>
+      <div class="bigstars" id="rStars"></div>
+      <div class="rstats">
+        <div class="rstat"><div class="v" id="rAcc"></div><div class="l">Précision</div></div>
+        <div class="rstat"><div class="v" id="rSpeed"></div><div class="l">Mots/min</div></div>
+        <div class="rstat"><div class="v" id="rErr"></div><div class="l">Erreurs</div></div>
+      </div>
+      <div class="msg" id="rMsg"></div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="backToMenu()">Menu</button>
+        <button class="btn btn-ghost" onclick="restartLesson()">↻ Recommencer</button>
+        <button class="btn btn-blue" id="rNext" onclick="nextLesson()">Leçon suivante →</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>Petit logiciel d'entraînement au clavier • AZERTY • Ta progression est enregistrée sur cet ordinateur</footer>
+
+<script>
+/* ============================================================
+   1) LES 10 LEÇONS PROGRESSIVES
+   ============================================================ */
+const LESSONS = [
+  { id:1, niveau:"deb", titre:"Les index : F et J",
+    desc:"Le tout début : les deux index sur les touches de repos.",
+    lignes:[
+      "fff jjj fff jjj",
+      "fj fj jf jf fj jf",
+      "ffj jjf fjf jfj",
+      "fj jf ff jj fjf jfj",
+      "jfjf fjfj jjff ffjj"
+    ]},
+  { id:2, niveau:"deb", titre:"Les majeurs : D et K",
+    desc:"On ajoute D et K, mélangés avec F et J.",
+    lignes:[
+      "ddd kkk ddd kkk",
+      "dk dk kd kd dk kd",
+      "dkf jkd fkd jdk",
+      "fjdk kdjf djkf kfjd",
+      "dfk jkd fdj kdf"
+    ]},
+  { id:3, niveau:"deb", titre:"Les annulaires : S et L",
+    desc:"On ajoute S et L à ce qu'on connaît déjà.",
+    lignes:[
+      "sss lll sss lll",
+      "sl sl ls ls sl ls",
+      "sld kfl jsl dks",
+      "sdfl jkls fsld lkjs",
+      "slk dlf jsk lfd"
+    ]},
+  { id:4, niveau:"deb", titre:"Les auriculaires : Q et M",
+    desc:"Les petits doigts entrent en jeu : Q et M.",
+    lignes:[
+      "qqq mmm qqq mmm",
+      "qm qm mq mq qm mq",
+      "qsdf jklm qsdf jklm",
+      "mqls dkfj qmsl fjkd",
+      "fdsq jklm qsdf mlkj"
+    ]},
+  { id:5, niveau:"deb", titre:"Le milieu complet : G et H",
+    desc:"Les index s'étirent vers G et H. Rangée du milieu finie !",
+    lignes:[
+      "ggg hhh ggg hhh",
+      "gh gh hg hg gh hg",
+      "fgh jhg gfh hgj",
+      "qsdfg hjklm gfds jklh",
+      "ghj fgh sdfg hjkl"
+    ]},
+  { id:6, niveau:"deb", titre:"Vers le haut : R et U",
+    desc:"On monte d'une rangée avec les index : R et U.",
+    lignes:[
+      "rrr uuu rrr uuu",
+      "ru ru ur ur ru ur",
+      "rur uru fru jru",
+      "fur jur dur rus rue",
+      "rue jura sur dur fur"
+    ]},
+  { id:7, niveau:"deb", titre:"En haut : E et I",
+    desc:"Les majeurs montent : E et I. On forme de vrais mots.",
+    lignes:[
+      "eee iii eee iii",
+      "ei ei ie ie ei ie",
+      "die fie rie lie kid",
+      "reine ride lime mire",
+      "ile rue lie dire mie"
+    ]},
+  { id:8, niveau:"int", titre:"En haut : Z et O",
+    desc:"Les annulaires montent : Z et O.",
+    lignes:[
+      "zzz ooo zzz ooo",
+      "zo zo oz oz zo oz",
+      "zoo rose dose code",
+      "zero rode mode joie",
+      "oser rose ozone zorro"
+    ]},
+  { id:9, niveau:"int", titre:"En haut : A et P",
+    desc:"Les auriculaires montent : A et P.",
+    lignes:[
+      "aaa ppp aaa ppp",
+      "ap ap pa pa ap pa",
+      "par pas papa pile",
+      "appel papier pomme aire",
+      "page pari sapa pose"
+    ]},
+  { id:10, niveau:"int", titre:"Le haut complet : T et Y",
+    desc:"Index vers T et Y. Rangée du haut terminée !",
+    lignes:[
+      "ttt yyy ttt yyy",
+      "ty ty yt yt ty yt",
+      "tya ety tym yti",
+      "tarte type royal style",
+      "azerty poiuyt portail"
+    ]},
+  { id:11, niveau:"int", titre:"Le bas : V B N",
+    desc:"On descend avec les index : V, B et N.",
+    lignes:[
+      "vvv bbb nnn vvv bbb nnn",
+      "vb bn nv vb bn nv",
+      "van bon nez vie bal",
+      "bonne avenue ruban navet",
+      "un bon vin avec nous"
+    ]},
+  { id:12, niveau:"int", titre:"Le bas complet : C X W",
+    desc:"Majeur, annulaire et auriculaire en bas. Clavier complet !",
+    lignes:[
+      "ccc xxx www ccc xxx www",
+      "cx xw wc cw xc wx",
+      "car cire avec wagon",
+      "taxi cave luxe coca",
+      "un wagon avec dix caves"
+    ]},
+  { id:13, niveau:"av", titre:"Mots et phrases",
+    desc:"Toutes les lettres réunies dans de vraies phrases.",
+    lignes:[
+      "le chat dort sur le lit",
+      "nous allons au marche ce matin",
+      "elle aime lire un bon livre",
+      "papa prepare un bon repas",
+      "voici une belle journee ensoleillee",
+      "le petit train roule lentement"
+    ]},
+  { id:14, niveau:"av", titre:"Les majuscules",
+    desc:"On garde la touche MAJ appuyée pour les majuscules.",
+    lignes:[
+      "Paris Lyon Marseille Nice",
+      "Marie Julie Paul Pierre",
+      "Lundi Mardi Mercredi Jeudi",
+      "La France est un beau pays",
+      "Anna et Lea jouent au parc",
+      "Le Soleil brille sur la Ville"
+    ]},
+  { id:15, niveau:"av", titre:"Les accents",
+    desc:"Les touches é è à ç ù du clavier français.",
+    lignes:[
+      "été café éléphant vérité",
+      "mère père frère très",
+      "voilà déjà à demain",
+      "français garçon leçon façade",
+      "où vas tu après le café",
+      "ma mère a préparé un bon gâteau"
+    ]},
+  { id:16, niveau:"av", titre:"Ponctuation et texte final",
+    desc:"Tout réuni : ponctuation, accents et phrases complètes.",
+    lignes:[
+      "bonjour, comment vas-tu ?",
+      "c'est une très belle journée !",
+      "il dit : viens vite ! d'accord ?",
+      "Écris doucement, sans te presser.",
+      "La vitesse viendra avec le temps.",
+      "Félicitations pour ton beau parcours !"
+    ]},
+  { id:17, niveau:"defi", defi:true, cibleWpm:15, titre:"Défi vitesse — Découverte",
+    desc:"🎯 Objectif : 15 mots/min. Tape vite mais sans te tromper !",
+    lignes:[
+      "le chat noir dort sur le lit",
+      "je vais a la maison ce soir",
+      "papa et maman lisent un livre",
+      "nous avons un grand jardin vert",
+      "la vie est vraiment tres belle"
+    ]},
+  { id:18, niveau:"defi", defi:true, cibleWpm:25, titre:"Défi vitesse — Confirmé",
+    desc:"🎯 Objectif : 25 mots/min, avec les majuscules.",
+    lignes:[
+      "Marie part a Paris demain matin",
+      "Le train arrive a la gare de Lyon",
+      "Nous mangeons une bonne salade verte",
+      "Les enfants jouent dans le grand parc",
+      "Le Soleil brille sur la belle ville"
+    ]},
+  { id:19, niveau:"defi", defi:true, cibleWpm:35, titre:"Défi vitesse — Expert",
+    desc:"🎯 Objectif : 35 mots/min. Accents et ponctuation compris !",
+    lignes:[
+      "Bravo ! Tu écris maintenant très vite.",
+      "La régularité, voilà le vrai secret.",
+      "Écris sans regarder le clavier, c'est gagné !",
+      "Félicitations, tu es devenu un as du clavier."
+    ]}
+];
+
+/* ============================================================
+   2) LE CLAVIER AZERTY (affichage + correspondances)
+   ============================================================ */
+const KB_ROWS = [
+  [["²"],["&"],["é"],['"'],["'"],["("],["-"],["è"],["_"],["ç"],["à"],[")"],["="],["←","wide"]],
+  [["TAB","tab"],["a"],["z"],["e"],["r"],["t"],["y"],["u"],["i"],["o"],["p"],["^"],["$"],["*"]],
+  [["MAJ","maj"],["q"],["s"],["d"],["f"],["g"],["h"],["j"],["k"],["l"],["m"],["ù"],["ENTRÉE","entree"]],
+  [["MAJ","maj"],["w"],["x"],["c"],["v"],["b"],["n"],[","],[";"],[":"],["!"],["MAJ","maj2"]],
+  [["ESPACE","space"]]
+];
+
+// Quel doigt pour quelle touche (data-key)
+const FINGERS = {
+  "²":"auriculaire gauche","&":"auriculaire gauche","a":"auriculaire gauche","q":"auriculaire gauche","w":"auriculaire gauche",
+  "é":"annulaire gauche","z":"annulaire gauche","s":"annulaire gauche","x":"annulaire gauche",
+  '"':"majeur gauche","e":"majeur gauche","d":"majeur gauche","c":"majeur gauche",
+  "'":"index gauche","(":"index gauche","r":"index gauche","t":"index gauche","f":"index gauche","g":"index gauche","v":"index gauche","b":"index gauche",
+  "-":"index droit","è":"index droit","y":"index droit","u":"index droit","h":"index droit","j":"index droit","n":"index droit",",":"index droit",
+  "_":"majeur droit","i":"majeur droit","k":"majeur droit",";":"majeur droit",
+  "ç":"annulaire droit","o":"annulaire droit","l":"annulaire droit",":":"annulaire droit",
+  "à":"auriculaire droit",")":"auriculaire droit","=":"auriculaire droit","p":"auriculaire droit","$":"auriculaire droit","m":"auriculaire droit","ù":"auriculaire droit","!":"auriculaire droit","*":"auriculaire droit",
+  "space":"pouce"
+};
+
+// Un caractère à taper -> quelle touche du clavier (et faut-il MAJ ?)
+const ACCENTS = ["é","è","à","ç","ù"];
+function charToKey(ch){
+  if(ch === " ") return {key:"space", shift:false};
+  if(ch >= "A" && ch <= "Z") return {key:ch.toLowerCase(), shift:true};
+  if(ACCENTS.includes(ch)) return {key:ch, shift:false};
+  const accUpper = {"É":"é","È":"è","À":"à","Ç":"ç","Ù":"ù"};
+  if(accUpper[ch]) return {key:accUpper[ch], shift:true};
+  switch(ch){
+    case ".": return {key:";", shift:true};
+    case "?": return {key:",", shift:true};
+    case ",": return {key:",", shift:false};
+    case ";": return {key:";", shift:false};
+    case ":": return {key:":", shift:false};
+    case "!": return {key:"!", shift:false};
+    case "'": return {key:"'", shift:false};
+    case "-": return {key:"-", shift:false};
+    default:  return {key:ch.toLowerCase(), shift:false};
+  }
+}
+
+/* ============================================================
+   3) SAUVEGARDE DE LA PROGRESSION
+   ============================================================ */
+const SAVE_KEY = "clavierProgress_v1";
+function loadProgress(){ try{ return JSON.parse(localStorage.getItem(SAVE_KEY)) || {}; }catch(e){ return {}; } }
+function saveProgress(p){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(p)); }catch(e){} }
+let progress = loadProgress();
+
+/* ============================================================
+   4) AFFICHAGE DU MENU
+   ============================================================ */
+const NIV_LABEL = {deb:"Débutant", int:"Intermédiaire", av:"Avancé", defi:"Défi"};
+function renderMenu(){
+  renderDashboard();
+  const grid = document.getElementById("lessonGrid");
+  grid.innerHTML = "";
+  LESSONS.forEach(L => {
+    const saved = progress[L.id] || {stars:0};
+    const stars = "★★★".split("").map((s,i)=> i < saved.stars ? "<b>★</b>" : "★").join("");
+    const wpm = (saved.bestWpm && saved.bestWpm < 1000) ? saved.bestWpm : 0;
+    const rec = (saved.stars > 0)
+      ? `<div class="rec">Record : ${wpm ? wpm + " mots/min · " : ""}${saved.bestAcc || 0}% de réussite</div>`
+      : `<div class="rec none">Pas encore essayée</div>`;
+    const card = document.createElement("div");
+    card.className = "card";
+    card.onclick = () => startLesson(L.id);
+    card.innerHTML = `
+      <span class="num">${L.id}</span>
+      <span class="niv ${L.niveau}">${NIV_LABEL[L.niveau]}</span>
+      <h3>${L.titre}</h3>
+      <div class="desc">${L.desc}</div>
+      <div class="stars">${stars}</div>
+      ${rec}`;
+    grid.appendChild(card);
+  });
+}
+
+function renderDashboard(){
+  const el = document.getElementById("dashboard");
+  const total = LESSONS.length;
+  const done = LESSONS.filter(L => (progress[L.id] ? progress[L.id].stars : 0) >= 1).length;
+  const pct = Math.round(done / total * 100);
+  const totalStars = LESSONS.reduce((s, L) => s + (progress[L.id] ? progress[L.id].stars : 0), 0);
+  const maxStars = total * 3;
+  let bestWpm = 0;
+  LESSONS.forEach(L => {
+    const w = progress[L.id] ? (progress[L.id].bestWpm || 0) : 0;
+    if(w > bestWpm && w < 1000) bestWpm = w;
+  });
+  el.innerHTML = `
+    <div class="dash-top">
+      <h2>📊 Ma progression</h2>
+      ${done > 0 ? '<button class="btn-reset" onclick="resetProgress()">↺ Tout effacer</button>' : ''}
+    </div>
+    <div class="dash-bar"><div style="width:${pct}%"></div></div>
+    <div class="dash-stats">
+      <span><b>${done}/${total}</b> leçons réussies</span>
+      <span><b>${totalStars}/${maxStars}</b> ⭐ étoiles gagnées</span>
+      <span>Meilleure vitesse : <b>${bestWpm}</b> mots/min</span>
+    </div>`;
+}
+
+function resetProgress(){
+  if(!confirm("Effacer toute la progression ? Cette action est définitive.")) return;
+  progress = {};
+  try{ localStorage.removeItem(SAVE_KEY); }catch(e){}
+  renderMenu();
+}
+
+/* ============================================================
+   5) CONSTRUCTION DU CLAVIER À L'ÉCRAN
+   ============================================================ */
+function buildKeyboard(){
+  const kb = document.getElementById("keyboard");
+  kb.innerHTML = "";
+  KB_ROWS.forEach(row => {
+    const r = document.createElement("div");
+    r.className = "krow";
+    row.forEach(([label, extra]) => {
+      const k = document.createElement("div");
+      k.className = "key" + (extra ? " " + extra.replace("maj2","maj") : "");
+      let dataKey = label.toLowerCase();
+      if(extra === "space") dataKey = "space";
+      else if(extra && extra.startsWith("maj")) dataKey = "shift";
+      else if(extra === "tab") dataKey = "tab";
+      else if(extra === "entree") dataKey = "enter";
+      else if(extra === "wide") dataKey = "back";
+      else dataKey = label;            // touche normale : son propre caractère
+      k.dataset.key = dataKey;
+      if(extra && extra.startsWith("maj")) k.textContent = "⇧ MAJ";
+      else k.textContent = label;
+      r.appendChild(k);
+    });
+    kb.appendChild(r);
+  });
+}
+function findKeyEl(dataKey){
+  return document.querySelector('.key[data-key="'+ cssEscape(dataKey) +'"]');
+}
+function findShiftEls(){ return document.querySelectorAll('.key[data-key="shift"]'); }
+function cssEscape(s){ return s.replace(/["\\]/g, "\\$&"); }
+
+/* ============================================================
+   6) MOTEUR DE LA LEÇON
+   ============================================================ */
+let cur = null; // état courant
+
+function startLesson(id){
+  const L = LESSONS.find(l => l.id === id);
+  cur = {
+    lesson: L,
+    lineIndex: 0,
+    charIndex: 0,
+    totalChars: L.lignes.join("").length,   // sans les sauts de ligne
+    typedChars: 0,
+    errors: 0,
+    started: null
+  };
+  document.getElementById("menu").classList.add("hidden");
+  document.getElementById("results").classList.add("hidden");
+  document.getElementById("lesson").classList.remove("hidden");
+  let sous = "Leçon " + L.id + " · " + NIV_LABEL[L.niveau];
+  if(L.defi) sous += " · 🎯 objectif " + L.cibleWpm + " mots/min";
+  document.getElementById("lTitle").innerHTML = L.titre + " <small>" + sous + "</small>";
+  stopChrono();
+  document.getElementById("sTime").textContent = "0:00";
+  buildKeyboard();
+  renderLine();
+  updateStats();
+}
+
+function currentLine(){ return cur.lesson.lignes[cur.lineIndex]; }
+
+function renderLine(){
+  const box = document.getElementById("typebox");
+  const line = currentLine();
+  box.innerHTML = "";
+  for(let i=0;i<line.length;i++){
+    const ch = line[i];
+    const span = document.createElement("span");
+    let cls = "char ";
+    if(ch === " ") cls += "space ";
+    if(i < cur.charIndex) cls += "done";
+    else if(i === cur.charIndex) cls += "current";
+    else cls += "pending";
+    span.className = cls;
+    span.textContent = ch === " " ? " " : ch;
+    box.appendChild(span);
+  }
+  highlightNextKey();
+  updateProgress();
+}
+
+function highlightNextKey(){
+  document.querySelectorAll(".key.kb-next").forEach(k => k.classList.remove("kb-next"));
+  const line = currentLine();
+  if(cur.charIndex >= line.length) return;
+  const ch = line[cur.charIndex];
+  const map = charToKey(ch);
+  const el = findKeyEl(map.key);
+  if(el) el.classList.add("kb-next");
+  if(map.shift) findShiftEls().forEach(s => s.classList.add("kb-next"));
+
+  // texte d'aide : quel doigt
+  const finger = FINGERS[map.key] || "";
+  const hint = document.getElementById("hint");
+  const affiche = ch === " " ? "la barre d'espace" : "la touche « " + ch + " »";
+  hint.innerHTML = finger
+    ? "Frappe " + (ch===" "?"":"<b>") + affiche + (ch===" "?"":"</b>") + " avec ton <b>" + finger + "</b>"
+      + (map.shift ? " (en gardant <b>MAJ</b> appuyée)" : "")
+    : "";
+}
+
+function flashKey(dataKey, good){
+  const el = findKeyEl(dataKey);
+  if(!el) return;
+  const cls = good ? "kb-good" : "kb-bad";
+  el.classList.add(cls);
+  setTimeout(()=> el.classList.remove(cls), 150);
+}
+
+function handleType(producedChar){
+  if(!cur) return;
+  const line = currentLine();
+  if(cur.charIndex >= line.length) return;
+  if(cur.started === null){ cur.started = Date.now(); startChrono(); }
+
+  const expected = line[cur.charIndex];
+
+  if(producedChar === expected){
+    // bonne touche
+    cur.typedChars++;
+    flashKey(charToKey(expected).key, true);
+    cur.charIndex++;
+    if(cur.charIndex >= line.length){
+      // ligne terminée -> ligne suivante ou fin
+      if(cur.lineIndex < cur.lesson.lignes.length - 1){
+        cur.lineIndex++;
+        cur.charIndex = 0;
+        renderLine();
+      } else {
+        finishLesson();
+        return;
+      }
+    } else {
+      renderLine();
+    }
+  } else {
+    // mauvaise touche : on compte l'erreur, on reste sur place
+    cur.errors++;
+    cur.typedChars++;
+    flashKey(charToKey(producedChar).key, false);
+    // marquer le caractère courant en rouge brièvement
+    const box = document.getElementById("typebox");
+    const span = box.children[cur.charIndex];
+    if(span){
+      span.classList.add("wrong");
+      setTimeout(()=> { if(span) span.classList.remove("wrong"); }, 200);
+    }
+  }
+  updateStats();
+}
+
+function updateStats(){
+  const acc = cur.typedChars === 0 ? 100 :
+    Math.max(0, Math.round((1 - cur.errors / cur.typedChars) * 100));
+  document.getElementById("sAcc").textContent = acc + "%";
+  document.getElementById("sErr").textContent = cur.errors;
+  let wpm = 0;
+  if(cur.started){
+    const minutes = (Date.now() - cur.started) / 60000;
+    const goodChars = cur.typedChars - cur.errors;
+    if(minutes > 0) wpm = Math.max(0, Math.round((goodChars / 5) / minutes));
+  }
+  document.getElementById("sSpeed").textContent = wpm;
+  return {acc, wpm};
+}
+
+function updateProgress(){
+  // progression = lignes faites + avancée dans la ligne courante
+  let done = 0;
+  for(let i=0;i<cur.lineIndex;i++) done += cur.lesson.lignes[i].length;
+  done += cur.charIndex;
+  const pct = Math.round(done / cur.totalChars * 100);
+  document.getElementById("lProgress").style.width = pct + "%";
+}
+
+/* ---- Chronomètre en direct ---- */
+let timerId = null;
+function startChrono(){
+  if(timerId) return;
+  timerId = setInterval(() => {
+    if(!cur || !cur.started) return;
+    const sec = Math.floor((Date.now() - cur.started) / 1000);
+    const m = Math.floor(sec / 60), s = sec % 60;
+    document.getElementById("sTime").textContent = m + ":" + String(s).padStart(2, "0");
+    updateStats(); // met aussi à jour la vitesse en temps réel
+  }, 1000);
+}
+function stopChrono(){ if(timerId){ clearInterval(timerId); timerId = null; } }
+
+/* ============================================================
+   7) FIN DE LEÇON + RÉSULTATS
+   ============================================================ */
+function finishLesson(){
+  stopChrono();
+  const {acc, wpm} = updateStats();
+  let stars = 1;
+  if(cur.lesson.defi){
+    const cible = cur.lesson.cibleWpm;
+    if(wpm >= cible && acc >= 90) stars = 3;
+    else if(wpm >= Math.round(cible * 0.7)) stars = 2;
+    else stars = 1;
+  } else {
+    if(acc >= 90) stars = 2;
+    if(acc >= 97) stars = 3;
+  }
+
+  // sauvegarde du meilleur score
+  const L = cur.lesson;
+  const prev = progress[L.id] || {stars:0, bestAcc:0, bestWpm:0};
+  progress[L.id] = {
+    stars: Math.max(prev.stars, stars),
+    bestAcc: Math.max(prev.bestAcc||0, acc),
+    bestWpm: Math.max(prev.bestWpm||0, wpm)
+  };
+  saveProgress(progress);
+
+  document.getElementById("lesson").classList.add("hidden");
+  document.getElementById("results").classList.remove("hidden");
+  document.getElementById("rTitle").textContent = "Leçon " + L.id + " terminée !";
+  document.getElementById("rStars").innerHTML =
+    "★★★".split("").map((s,i)=> i<stars ? "<b>★</b>" : "★").join("");
+  document.getElementById("rAcc").textContent = acc + "%";
+  document.getElementById("rSpeed").textContent = wpm;
+  document.getElementById("rErr").textContent = cur.errors;
+
+  let msg = "";
+  if(cur.lesson.defi){
+    const cible = cur.lesson.cibleWpm;
+    if(stars === 3) msg = "Incroyable ! Objectif de " + cible + " mots/min atteint. 🏆";
+    else if(stars === 2) msg = "Belle vitesse ! Encore un effort pour viser " + cible + " mots/min. 🚀";
+    else msg = "Défi relevé ! Recommence pour gagner en vitesse. 💪";
+  } else {
+    if(stars === 3) msg = "Parfait, c'est excellent ! Tu peux passer à la suite. 🎉";
+    else if(stars === 2) msg = "Très bien ! Encore un petit effort pour viser les 3 étoiles. 😊";
+    else msg = "C'est un bon début. Recommence à ton rythme, sans te presser. 💪";
+  }
+  document.getElementById("rMsg").textContent = msg;
+
+  // cacher "suivante" si dernière leçon
+  document.getElementById("rNext").style.display =
+    (L.id >= LESSONS.length) ? "none" : "inline-block";
+}
+
+function restartLesson(){ startLesson(cur.lesson.id); }
+function nextLesson(){
+  const next = cur.lesson.id + 1;
+  if(next <= LESSONS.length) startLesson(next);
+  else backToMenu();
+}
+function backToMenu(){
+  stopChrono();
+  cur = null;
+  document.getElementById("lesson").classList.add("hidden");
+  document.getElementById("results").classList.add("hidden");
+  document.getElementById("menu").classList.remove("hidden");
+  renderMenu();
+}
+
+/* ============================================================
+   8) ÉCOUTE DU CLAVIER RÉEL
+   ============================================================ */
+document.addEventListener("keydown", (e) => {
+  const lessonVisible = !document.getElementById("lesson").classList.contains("hidden");
+  if(!lessonVisible) return;
+
+  if(e.key === " ") e.preventDefault();              // éviter le défilement
+  if(e.key === "Tab") e.preventDefault();
+
+  if(e.key === "Shift" || e.key === "CapsLock" ||
+     e.key === "Control" || e.key === "Alt" || e.key === "AltGraph") return;
+
+  // on ne traite que les vrais caractères (longueur 1) + l'espace
+  if(e.key.length === 1){
+    handleType(e.key);
+  }
+});
+
+/* ============================================================
+   9) DÉMARRAGE
+   ============================================================ */
+renderMenu();
+</script>
+</body>
+</html>

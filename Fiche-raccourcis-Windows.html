@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes raccourcis Windows — l'essentiel</title>
+<style>
+  :root{
+    --bleu:#1d6fb8;
+    --bleu-clair:#eaf3fb;
+    --vert:#2e8b57;
+    --vert-clair:#e9f6ee;
+    --orange:#e07b00;
+    --orange-clair:#fdf1e3;
+    --violet:#7d4fa3;
+    --violet-clair:#f3edf9;
+    --gris:#444;
+    --bordure:#d4d4d4;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:"Segoe UI", Calibri, Arial, sans-serif;
+    color:#222;
+    margin:0;
+    padding:18px 22px;
+    font-size:15px;
+    line-height:1.4;
+    background:#fff;
+  }
+  h1{
+    text-align:center;
+    color:var(--bleu);
+    font-size:27px;
+    margin:0 0 2px;
+  }
+  .sous-titre{
+    text-align:center;
+    color:var(--gris);
+    font-size:14px;
+    margin:0 0 16px;
+    font-style:italic;
+  }
+  /* Mise en colonnes pour tenir sur la page */
+  .colonnes{
+    column-count:2;
+    column-gap:22px;
+  }
+  .bloc{
+    break-inside:avoid;
+    border:1.5px solid var(--bordure);
+    border-radius:10px;
+    margin-bottom:14px;
+    overflow:hidden;
+  }
+  .bloc h2{
+    font-size:16px;
+    margin:0;
+    padding:7px 12px;
+    color:#fff;
+  }
+  .b-bleu h2{background:var(--bleu);}    .b-bleu{background:var(--bleu-clair);}
+  .b-vert h2{background:var(--vert);}    .b-vert{background:var(--vert-clair);}
+  .b-orange h2{background:var(--orange);} .b-orange{background:var(--orange-clair);}
+  .b-violet h2{background:var(--violet);} .b-violet{background:var(--violet-clair);}
+  table{
+    width:100%;
+    border-collapse:collapse;
+  }
+  td{
+    padding:6px 12px;
+    vertical-align:middle;
+    border-top:1px solid rgba(0,0,0,0.06);
+  }
+  tr:first-child td{border-top:none;}
+  td.action{font-size:14px;}
+  td.touche{
+    text-align:right;
+    white-space:nowrap;
+    width:42%;
+  }
+  .k{
+    display:inline-block;
+    background:#fff;
+    border:1.5px solid #999;
+    border-bottom-width:3px;
+    border-radius:6px;
+    padding:2px 8px;
+    margin:1px 1px;
+    font-weight:bold;
+    font-size:13.5px;
+    color:#111;
+    min-width:20px;
+    text-align:center;
+  }
+  .plus{font-weight:bold;color:#888;margin:0 1px;}
+  .astuce{
+    margin-top:6px;
+    background:#fffbe6;
+    border:1.5px dashed var(--orange);
+    border-radius:10px;
+    padding:10px 14px;
+    font-size:14px;
+  }
+  .astuce b{color:var(--orange);}
+  .pied{
+    text-align:center;
+    color:#999;
+    font-size:12px;
+    margin-top:10px;
+  }
+  @media print{
+    body{padding:10px 14px;font-size:14px;}
+    .astuce{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    h1,.bloc h2,.k{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    @page{margin:1cm;}
+  }
+</style>
+</head>
+<body>
+
+  <h1>⌨️ Mes raccourcis Windows</h1>
+  <p class="sous-titre">Les gestes du quotidien — appuyez sur les touches <b>en même temps</b></p>
+
+  <div class="colonnes">
+
+    <!-- COPIER / COLLER -->
+    <div class="bloc b-bleu">
+      <h2>✂️ Copier, coller, annuler</h2>
+      <table>
+        <tr><td class="action">Copier</td>              <td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">C</span></td></tr>
+        <tr><td class="action">Couper</td>              <td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">X</span></td></tr>
+        <tr><td class="action">Coller</td>              <td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">V</span></td></tr>
+        <tr><td class="action">Annuler (revenir en arrière)</td><td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">Z</span></td></tr>
+        <tr><td class="action">Rétablir</td>            <td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">Y</span></td></tr>
+        <tr><td class="action">Tout sélectionner</td>  <td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">A</span></td></tr>
+      </table>
+    </div>
+
+    <!-- TEXTE -->
+    <div class="bloc b-vert">
+      <h2>📝 Quand j'écris du texte</h2>
+      <table>
+        <tr><td class="action">Enregistrer (sauvegarder)</td><td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">S</span></td></tr>
+        <tr><td class="action">Mettre en <b>gras</b></td>   <td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">G</span></td></tr>
+        <tr><td class="action">Mettre en <i>italique</i></td><td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">I</span></td></tr>
+        <tr><td class="action">Souligner</td>              <td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">U</span></td></tr>
+        <tr><td class="action">Imprimer</td>               <td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">P</span></td></tr>
+        <tr><td class="action">Rechercher un mot</td>      <td class="touche"><span class="k">Ctrl</span><span class="plus">+</span><span class="k">F</span></td></tr>
+      </table>
+    </div>
+
+    <!-- FENETRES -->
+    <div class="bloc b-orange">
+      <h2>🪟 Mes fenêtres &amp; le bureau</h2>
+      <table>
+        <tr><td class="action">Afficher le Bureau</td>        <td class="touche"><span class="k">⊞ Win</span><span class="plus">+</span><span class="k">D</span></td></tr>
+        <tr><td class="action">Verrouiller l'ordinateur</td>  <td class="touche"><span class="k">⊞ Win</span><span class="plus">+</span><span class="k">L</span></td></tr>
+        <tr><td class="action">Passer d'une fenêtre à l'autre</td><td class="touche"><span class="k">Alt</span><span class="plus">+</span><span class="k">Tab</span></td></tr>
+        <tr><td class="action">Fermer la fenêtre</td>         <td class="touche"><span class="k">Alt</span><span class="plus">+</span><span class="k">F4</span></td></tr>
+        <tr><td class="action">Ouvrir l'explorateur de fichiers</td><td class="touche"><span class="k">⊞ Win</span><span class="plus">+</span><span class="k">E</span></td></tr>
+        <tr><td class="action">Coller fenêtre à gauche / droite</td><td class="touche"><span class="k">⊞ Win</span><span class="plus">+</span><span class="k">←</span> <span class="k">→</span></td></tr>
+      </table>
+    </div>
+
+    <!-- PRATIQUE -->
+    <div class="bloc b-violet">
+      <h2>⭐ Très pratique au quotidien</h2>
+      <table>
+        <tr><td class="action">Faire une capture d'écran</td><td class="touche"><span class="k">⊞ Win</span><span class="plus">+</span><span class="k">Maj</span><span class="plus">+</span><span class="k">S</span></td></tr>
+        <tr><td class="action">Ouvrir les Paramètres</td>    <td class="touche"><span class="k">⊞ Win</span><span class="plus">+</span><span class="k">I</span></td></tr>
+        <tr><td class="action">Zoomer / dézoomer (avec la souris)</td><td class="touche"><span class="k">Ctrl</span><span class="plus">+</span>roulette</td></tr>
+        <tr><td class="action">Renommer un fichier</td>      <td class="touche"><span class="k">F2</span></td></tr>
+        <tr><td class="action">Supprimer (mettre à la corbeille)</td><td class="touche"><span class="k">Suppr</span></td></tr>
+        <tr><td class="action">Le menu Démarrer</td>         <td class="touche"><span class="k">⊞ Win</span></td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="astuce">
+    <b>💡 À retenir :</b> la touche <span class="k">Ctrl</span> est tout en bas à gauche du clavier, et la touche
+    <span class="k">⊞ Win</span> (le petit logo Windows) est juste à côté.
+    On garde la 1<sup>re</sup> touche appuyée, puis on tape la lettre. Pas de panique : avec
+    <span class="k">Ctrl</span><span class="plus">+</span><span class="k">Z</span> on peut presque toujours annuler une bêtise !
+  </div>
+
+  <p class="pied">Fiche aide-mémoire Windows • À garder près de l'ordinateur</p>
+
+</body>
+</html>
