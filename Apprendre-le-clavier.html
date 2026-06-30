@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apprendre le clavier — 16 leçons + défis</title>
+<title>Apprendre le clavier — 20 leçons + défis</title>
 <style>
   :root{
     --bleu:#1d6fb8;
@@ -187,13 +187,21 @@
   .result .actions{display:flex;gap:12px;justify-content:center;}
 
   footer{text-align:center;color:#aab6c1;font-size:12px;padding:0 0 24px;}
+
+  .btn-shortcut{
+    margin-top:12px;background:#fff;border:1.5px solid #cfe0f0;color:var(--bleu);
+    border-radius:10px;padding:9px 18px;font-size:14px;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:var(--ombre);
+  }
+  .btn-shortcut:hover{background:var(--bleu-clair);}
 </style>
 </head>
 <body>
 
 <header>
   <h1>⌨️ J'apprends le clavier</h1>
-  <p>16 leçons + 3 défis vitesse — du débutant au confirmé</p>
+  <p>20 leçons + 3 défis vitesse — du débutant au confirmé</p>
+  <button class="btn-shortcut" onclick="creerRaccourci()">📌 Créer un raccourci sur le bureau</button>
 </header>
 
 <div class="wrap">
@@ -254,155 +262,181 @@
    1) LES 10 LEÇONS PROGRESSIVES
    ============================================================ */
 const LESSONS = [
+  /* ===== Section 1 : la rangée du milieu (le repos des doigts) ===== */
   { id:1, niveau:"deb", titre:"Les index : F et J",
     desc:"Le tout début : les deux index sur les touches de repos.",
     lignes:[
-      "fff jjj fff jjj",
-      "fj fj jf jf fj jf",
+      "ff jj ff jj",
+      "fj jf fj jf fj jf",
       "ffj jjf fjf jfj",
-      "fj jf ff jj fjf jfj",
-      "jfjf fjfj jjff ffjj"
+      "fjfj jfjf ffjj jjff"
     ]},
   { id:2, niveau:"deb", titre:"Les majeurs : D et K",
     desc:"On ajoute D et K, mélangés avec F et J.",
     lignes:[
-      "ddd kkk ddd kkk",
-      "dk dk kd kd dk kd",
-      "dkf jkd fkd jdk",
-      "fjdk kdjf djkf kfjd",
-      "dfk jkd fdj kdf"
+      "dd kk dd kk",
+      "dk kd dk kd dk kd",
+      "fdk jkd dfj kjf",
+      "fjdk dkfj kdjf jkfd"
     ]},
   { id:3, niveau:"deb", titre:"Les annulaires : S et L",
     desc:"On ajoute S et L à ce qu'on connaît déjà.",
     lignes:[
-      "sss lll sss lll",
-      "sl sl ls ls sl ls",
-      "sld kfl jsl dks",
-      "sdfl jkls fsld lkjs",
-      "slk dlf jsk lfd"
+      "ss ll ss ll",
+      "sl ls sl ls sl ls",
+      "sfl jls dsl kls",
+      "slfj jlsk dslf klsj"
     ]},
   { id:4, niveau:"deb", titre:"Les auriculaires : Q et M",
     desc:"Les petits doigts entrent en jeu : Q et M.",
     lignes:[
-      "qqq mmm qqq mmm",
-      "qm qm mq mq qm mq",
-      "qsdf jklm qsdf jklm",
-      "mqls dkfj qmsl fjkd",
-      "fdsq jklm qsdf mlkj"
+      "qq mm qq mm",
+      "qm mq qm mq qm mq",
+      "qsl mkd qfm mjq",
+      "qsdf jklm mlkj fdsq"
     ]},
   { id:5, niveau:"deb", titre:"Le milieu complet : G et H",
     desc:"Les index s'étirent vers G et H. Rangée du milieu finie !",
     lignes:[
-      "ggg hhh ggg hhh",
-      "gh gh hg hg gh hg",
-      "fgh jhg gfh hgj",
-      "qsdfg hjklm gfds jklh",
-      "ghj fgh sdfg hjkl"
+      "gg hh gg hh",
+      "gh hg gh hg gh hg",
+      "fgh jhg ghd hgk",
+      "qsdfgh hjklmg ghjk fghj"
     ]},
-  { id:6, niveau:"deb", titre:"Vers le haut : R et U",
-    desc:"On monte d'une rangée avec les index : R et U.",
+  { id:6, niveau:"deb", titre:"✨ Révision : le milieu",
+    desc:"On mélange tous les doigts de la rangée de repos, en rythme.",
     lignes:[
-      "rrr uuu rrr uuu",
-      "ru ru ur ur ru ur",
-      "rur uru fru jru",
-      "fur jur dur rus rue",
-      "rue jura sur dur fur"
+      "fj dk sl gh qm",
+      "jf kd ls hg mq",
+      "fdsq ghjk lmkj hgfd",
+      "qsdfg hjklm gfdsq mlkjh"
     ]},
-  { id:7, niveau:"deb", titre:"En haut : E et I",
-    desc:"Les majeurs montent : E et I. On forme de vrais mots.",
+
+  /* ===== Section 2 : la rangée du haut (et les premiers mots !) ===== */
+  { id:7, niveau:"deb", titre:"Les index montent : R et U",
+    desc:"Première voyelle ! Avec R et U on forme déjà des mots.",
     lignes:[
-      "eee iii eee iii",
-      "ei ei ie ie ei ie",
-      "die fie rie lie kid",
-      "reine ride lime mire",
-      "ile rue lie dire mie"
+      "ru ur ru ur ru ur",
+      "fru jru dru kru sru",
+      "rul jur lur mur dur",
+      "mur dur sur jus lu du"
     ]},
-  { id:8, niveau:"int", titre:"En haut : Z et O",
-    desc:"Les annulaires montent : Z et O.",
+  { id:8, niveau:"deb", titre:"Les majeurs montent : E et I",
+    desc:"Deux voyelles de plus : E et I. Plein de mots possibles.",
     lignes:[
-      "zzz ooo zzz ooo",
-      "zo zo oz oz zo oz",
-      "zoo rose dose code",
-      "zero rode mode joie",
-      "oser rose ozone zorro"
+      "ei ie ei ie ei ie",
+      "die fie rie lie mie",
+      "lire dire midi ride",
+      "jeudi humide guide fier"
     ]},
-  { id:9, niveau:"int", titre:"En haut : A et P",
-    desc:"Les auriculaires montent : A et P.",
+  { id:9, niveau:"int", titre:"✨ Révision : mes premières phrases",
+    desc:"Première vraie phrase, avec les lettres déjà apprises.",
     lignes:[
-      "aaa ppp aaa ppp",
-      "ap ap pa pa ap pa",
-      "par pas papa pile",
-      "appel papier pomme aire",
-      "page pari sapa pose"
+      "fj dk sl gh qm ru ei",
+      "mur dur lire dire midi",
+      "je lis le guide",
+      "elle dirige le jeu"
     ]},
-  { id:10, niveau:"int", titre:"Le haut complet : T et Y",
+  { id:10, niveau:"int", titre:"Les annulaires montent : Z et O",
+    desc:"La voyelle O arrive avec Z.",
+    lignes:[
+      "zo oz zo oz zo oz",
+      "zod kos los rod mos",
+      "rose dose mode judo",
+      "zoo or os dodo rode"
+    ]},
+  { id:11, niveau:"int", titre:"Les auriculaires montent : A et P",
+    desc:"La voyelle A complète les sons. On écrit de vrais mots.",
+    lignes:[
+      "ap pa ap pa ap pa",
+      "par pas page pari",
+      "papa salade lampe image",
+      "papa adore la salade"
+    ]},
+  { id:12, niveau:"int", titre:"Le haut complet : T et Y",
     desc:"Index vers T et Y. Rangée du haut terminée !",
     lignes:[
-      "ttt yyy ttt yyy",
-      "ty ty yt yt ty yt",
-      "tya ety tym yti",
-      "tarte type royal style",
-      "azerty poiuyt portail"
+      "ty yt ty yt ty yt",
+      "tya yti tym ryt",
+      "tarte type petit porte",
+      "le petit roi adore lire"
     ]},
-  { id:11, niveau:"int", titre:"Le bas : V B N",
-    desc:"On descend avec les index : V, B et N.",
+  { id:13, niveau:"int", titre:"✨ Révision : la rangée du haut",
+    desc:"De vraies phrases, surtout avec les lettres du haut et du milieu.",
     lignes:[
-      "vvv bbb nnn vvv bbb nnn",
-      "vb bn nv vb bn nv",
-      "van bon nez vie bal",
-      "bonne avenue ruban navet",
-      "un bon vin avec nous"
+      "le petit roi adore lire",
+      "marie ramasse les pommes",
+      "papa a sali sa jolie photo",
+      "il a tout relu le dossier"
     ]},
-  { id:12, niveau:"int", titre:"Le bas complet : C X W",
+
+  /* ===== Section 3 : la rangée du bas ===== */
+  { id:14, niveau:"int", titre:"Le bas : V B N",
+    desc:"On descend avec les index : V, B et N (très utile !).",
+    lignes:[
+      "vb bn nv vb bn nv",
+      "van bon vie bal nez",
+      "bonne avenue ruban navet",
+      "un bon repas pour neuf amis"
+    ]},
+  { id:15, niveau:"int", titre:"Le bas complet : C X W",
     desc:"Majeur, annulaire et auriculaire en bas. Clavier complet !",
     lignes:[
-      "ccc xxx www ccc xxx www",
       "cx xw wc cw xc wx",
-      "car cire avec wagon",
-      "taxi cave luxe coca",
-      "un wagon avec dix caves"
+      "car cire cave avec",
+      "taxi wagon luxe vache",
+      "le chat noir dort dans le wagon"
     ]},
-  { id:13, niveau:"av", titre:"Mots et phrases",
-    desc:"Toutes les lettres réunies dans de vraies phrases.",
+  { id:16, niveau:"av", titre:"✨ Révision : toutes les lettres",
+    desc:"Phrases complètes utilisant toutes les lettres apprises.",
     lignes:[
-      "le chat dort sur le lit",
+      "le petit chat joue avec la balle",
       "nous allons au marche ce matin",
-      "elle aime lire un bon livre",
-      "papa prepare un bon repas",
-      "voici une belle journee ensoleillee",
-      "le petit train roule lentement"
+      "elle aime bien lire un bon livre",
+      "papa prepare un bon repas chaud",
+      "voici une belle journee tranquille"
     ]},
-  { id:14, niveau:"av", titre:"Les majuscules",
+
+  /* ===== Section 4 : mise en application ===== */
+  { id:17, niveau:"av", titre:"Mots et phrases",
+    desc:"On gagne en fluidité avec des phrases plus longues.",
+    lignes:[
+      "le soleil brille dans le ciel bleu",
+      "mon ami joue de la guitare",
+      "nous partons en voyage demain",
+      "la petite fille dessine un oiseau",
+      "il fait beau pour se promener"
+    ]},
+  { id:18, niveau:"av", titre:"Les majuscules",
     desc:"On garde la touche MAJ appuyée pour les majuscules.",
     lignes:[
       "Paris Lyon Marseille Nice",
       "Marie Julie Paul Pierre",
       "Lundi Mardi Mercredi Jeudi",
       "La France est un beau pays",
-      "Anna et Lea jouent au parc",
       "Le Soleil brille sur la Ville"
     ]},
-  { id:15, niveau:"av", titre:"Les accents",
+  { id:19, niveau:"av", titre:"Les accents",
     desc:"Les touches é è à ç ù du clavier français.",
     lignes:[
       "été café éléphant vérité",
       "mère père frère très",
       "voilà déjà à demain",
       "français garçon leçon façade",
-      "où vas tu après le café",
       "ma mère a préparé un bon gâteau"
     ]},
-  { id:16, niveau:"av", titre:"Ponctuation et texte final",
+  { id:20, niveau:"av", titre:"Ponctuation et texte final",
     desc:"Tout réuni : ponctuation, accents et phrases complètes.",
     lignes:[
       "bonjour, comment vas-tu ?",
       "c'est une très belle journée !",
       "il dit : viens vite ! d'accord ?",
       "Écris doucement, sans te presser.",
-      "La vitesse viendra avec le temps.",
       "Félicitations pour ton beau parcours !"
     ]},
-  { id:17, niveau:"defi", defi:true, cibleWpm:15, titre:"Défi vitesse — Découverte",
+
+  /* ===== Défis vitesse ===== */
+  { id:21, niveau:"defi", defi:true, cibleWpm:15, titre:"Défi vitesse — Découverte",
     desc:"🎯 Objectif : 15 mots/min. Tape vite mais sans te tromper !",
     lignes:[
       "le chat noir dort sur le lit",
@@ -411,7 +445,7 @@ const LESSONS = [
       "nous avons un grand jardin vert",
       "la vie est vraiment tres belle"
     ]},
-  { id:18, niveau:"defi", defi:true, cibleWpm:25, titre:"Défi vitesse — Confirmé",
+  { id:22, niveau:"defi", defi:true, cibleWpm:25, titre:"Défi vitesse — Confirmé",
     desc:"🎯 Objectif : 25 mots/min, avec les majuscules.",
     lignes:[
       "Marie part a Paris demain matin",
@@ -420,7 +454,7 @@ const LESSONS = [
       "Les enfants jouent dans le grand parc",
       "Le Soleil brille sur la belle ville"
     ]},
-  { id:19, niveau:"defi", defi:true, cibleWpm:35, titre:"Défi vitesse — Expert",
+  { id:23, niveau:"defi", defi:true, cibleWpm:35, titre:"Défi vitesse — Expert",
     desc:"🎯 Objectif : 35 mots/min. Accents et ponctuation compris !",
     lignes:[
       "Bravo ! Tu écris maintenant très vite.",
@@ -542,6 +576,28 @@ function resetProgress(){
   progress = {};
   try{ localStorage.removeItem(SAVE_KEY); }catch(e){}
   renderMenu();
+}
+
+/* ---- Raccourci bureau (fichier .url Windows) ---- */
+const LIEN_PUBLIC = "https://okamilang.github.io/apprendre-le-clavier/";
+function creerRaccourci(){
+  const contenu = "[InternetShortcut]\r\nURL=" + LIEN_PUBLIC + "\r\nIconIndex=0\r\n";
+  const blob = new Blob([contenu], {type:"text/plain"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "Apprendre le clavier.url";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  alert(
+    "✅ Le raccourci « Apprendre le clavier » a été téléchargé.\n\n" +
+    "Pour le placer sur le Bureau :\n" +
+    "1. Ouvre ton dossier Téléchargements\n" +
+    "2. Glisse le fichier « Apprendre le clavier » sur le Bureau\n" +
+    "   (ou clic droit dessus → Couper, puis colle sur le Bureau)\n\n" +
+    "Ensuite, un double-clic dessus ouvrira directement le site. 🙂"
+  );
 }
 
 /* ============================================================
